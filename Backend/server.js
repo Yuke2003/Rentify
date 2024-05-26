@@ -62,6 +62,5 @@ app.post("/api/v1/upload", upload.single("image"), (req, res) => {
 
 app.use("/api/v1/auth", userRouter);
 app.use("/api/v1/rents", rentRouter);
-app.use("/api/v1/send-emails", emailRouter);
 
 app.listen(PORT, () => console.log(`app running on the port ${PORT}`));
