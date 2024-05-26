@@ -14,27 +14,19 @@ import { useAuthContext } from "../Context/authContext";
 
 const RentDetails = () => {
   const [rentDetails, setRentDetails] = useState([]);
-  const [filter,setFilter] = useState("")
-  const [sort,setSort] = useState("")
+  // const [filter,setFilter] = useState("")
+  // const [sort,setSort] = useState("")
   const { authUser, setRentId, rentId } = useAuthContext();
 
   useEffect(() => {
     const getRentDetails = async () => {
       try {
-        let url = `http://localhost:8000/api/v1/rents`
+        let url = `http://localhost:8000/api/v1/rents`;
         const response = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${authUser.token}`, // Send token in Authorization header
           },
         });
-        const queryParams = [];
-        if (sort) queryParams.push(`sort=${sort}`);
-        if (filter) queryParams.push(`filter=${filter}`);
-        
-        // Append query parameters to the URL
-        if (queryParams.length) {
-          url += `?${queryParams.join("&")}`;
-        }
         const data = await response.data;
         setRentDetails(data.data);
       } catch (err) {
@@ -42,7 +34,7 @@ const RentDetails = () => {
       }
     };
     getRentDetails();
-  }, [authUser.token, rentId,filter,sort]);
+  }, [authUser.token, rentId]);
 
   const handleSetRentId = (id) => {
     setRentId(id);
@@ -55,46 +47,41 @@ const RentDetails = () => {
         className="flex justify-between items-center border-b-2 border-gray-800"
         name="filter"
       >
+        <div className=" relative flex items-center gap-3 mb-2">
+          <div id="filter">
+            <button className="flex items-center border-2 justify-center border-[#444] px-4 gap-1 rounded-md">
+              Filter <MdKeyboardArrowDown />
+            </button>
+            <div
+              id="checkbox"
+              className="absolute border-2 border-gray-300 px-8 mt-4"
+            >
+              <label className="text-lg flex gap-2 ">
+                <input type="checkbox" name="price" className="p-5" />
+                Price
+              </label>
 
-
-
-<div className=' relative flex items-center gap-3 mb-2'>
-    <div id='filter'>
-      <button className='flex items-center border-2 justify-center border-[#444] px-4 gap-1 rounded-md'>Filter <MdKeyboardArrowDown /></button>
-      <div id="checkbox" className='absolute border-2 border-gray-300 px-8 mt-4'>
-      <label className='text-lg flex gap-2 '>
-              <input
-                type="checkbox"
-                name="price"
-                className='p-5'
-              />
-              Price
-            </label>
-
-            <label className='text-lg flex gap-2 '>
-              <input
-                type="checkbox"
-                name="price"
-                className='p-5'
-              />
-              Price
-            </label>
-      </div>
-    </div>
-    <div id='filter'>
-      <button className='flex items-center border-2 justify-center border-[#444] px-4 gap-1 rounded-md'>Sort <MdKeyboardArrowDown /></button>
-    </div>
-   </div>
-
-
-
-
-
+              <label className="text-lg flex gap-2 ">
+                <input type="checkbox" name="price" className="p-5" />
+                Price
+              </label>
+            </div>
+          </div>
+          <div id="filter">
+            <button className="flex items-center border-2 justify-center border-[#444] px-4 gap-1 rounded-md">
+              Sort <MdKeyboardArrowDown />
+            </button>
+          </div>
+        </div>
 
         <Link to="/createProperty">
-          {authUser.data.user.role === "buyer" ? " " :<button className="text-[#fff] bg-[#444] p-1 px-3 mb-2 rounded-lg">
-            + Create Rent
-          </button>}
+          {authUser.data.user.role === "buyer" ? (
+            " "
+          ) : (
+            <button className="text-[#fff] bg-[#444] p-1 px-3 mb-2 rounded-lg">
+              + Create Rent
+            </button>
+          )}
         </Link>
       </div>
 
