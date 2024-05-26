@@ -114,7 +114,7 @@ const SignUpForm = () => {
               className="border-2 border-black p-2 rounded w-96"
             />
           </div>
-
+         
           <button className="text-center w-96 text-[#f7f7f7] p-2 mt-4 rounded-full bg-[#444]">
             Sign up
           </button>

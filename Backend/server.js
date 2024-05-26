@@ -15,8 +15,6 @@ dotenv.config({ path: "./config.env" });
 const PORT = process.env.PORT || 8000;
 console.log(process.env.PORT);
 
-const _dirname = path.resolve();
-
 const DB = process.env.MongoDB;
 app.use(cors());
 app.use(morgan("dev"));
@@ -47,11 +45,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// app.use(express.static(path.join(_dirname,"/frontend/dist")))
-
-app.get("*",(req,res)=>{
-  res.sendFile(path.join(_dirname,"frontend","dist","index.html"))
-})
 
 const upload = multer({ storage });
 
